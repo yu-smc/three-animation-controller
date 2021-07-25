@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script src="./js/lib/aframe.js"></script>
+
+  <!-- Defines AnimationClock and AnimationController -->
+  <script src="../build/three-animation-controller.js"></script>
+
+  <a-scene id="test-scene" three-clock>
+    <a-assets>
+      <a-asset-item id="test-model" src="./3d-model/obakeB.glb"></a-asset-item>
+    </a-assets>
+
+    <a-entity animation-controller gltf-model="#test-model" position="0 0 -5"></a-entity>
+  </a-scene>
+
+  <script>
+    const clock = new AnimationClock();
+
+    //clockの設定。tick内でupdateを呼ぶことでフレーム間の時間差を取得している
+    AFRAME.registerComponent('three-clock', {
+      tick() {
+        clock.update()
+      }
+    })
+
+    //3Dモデルごとに定義。同時に何個まで耐えられるかはパフォーマンステストの上判断
+    AFRAME.registerComponent('animation-controller', {
+      init() {
+        const that = this;
+        this.el.addEventListener('model-loaded', function (e) {
+          const gltf = e.target.object3D.children[0];
+          that.animationController = new AnimationController(gltf, clock, {
+            //再生する順番にオブジェクトを格納していく
+            //下記は最初のアニメーションを一回再生し、2番目のアニメーションを5回ループして終了するサンプル
+            animations: [
+              {
+                name: "eating",
+                //アニメーション間に静止ができてしまったりする場合に設定。大きい値ほど早いタイミングで次のアニメーションに遷移。マイナス指定も可
+                cutoff: 100
+              },
+              {
+                name: "yorokobi",
+                loop: true,
+                //数値を指定するとその回数分ループする
+                loopTimes: 1
+              }
+            ]
+          });
+
+          that.animationController.start();
+          that.isPlaying = true;
+
+          //全てのアニメーションの終了を検知
+          that.animationController.on('finished-all', () => {
+            debugger
+            that.isPlaying = false;
+          })
+
+          //明示的にアニメーションを停止する場合は以下のように記述する
+          //that.animationController.stop();
+        })
+      },
+
+      tick() {
+        const controller = this.animationController;
+        if (controller && this.isPlaying) {
+          this.animationController.update();
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

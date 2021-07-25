@@ -1,0 +1,29 @@
+{
+  "name": "three-animation-controller",
+  "version": "1.0.0",
+  "description": "",
+  "main": "rollup.config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "npm run build && browser-sync --server \".\" start & npm run watch",
+    "build": "rollup -c",
+    "watch": "onchange \"./src/**\" -- rollup -c"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yu-smc/three-animation-controller.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yu-smc/three-animation-controller/issues"
+  },
+  "homepage": "https://github.com/yu-smc/three-animation-controller#readme",
+  "devDependencies": {
+    "browser-sync": "^2.27.4",
+    "onchange": "^7.1.0"
+  }
+}
