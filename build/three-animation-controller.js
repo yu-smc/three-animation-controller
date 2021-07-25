@@ -60,7 +60,6 @@ class AnimationController {
   }
 
   playAnimation(id) {
-    console.log(this.clipsByOrder[id]);
     const clipData = this.clipsByOrder[id];
     const animation = this.animationMixer.clipAction(clipData.clip);
 
