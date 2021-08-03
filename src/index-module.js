@@ -1,7 +1,5 @@
-import { AnimationClock } from "./animation-clock.js";
-import { AnimationController } from "./animation-controller.js";
+import { AnimationClock as aClock } from "./animation-clock.js";
+import { AnimationController as aController } from "./animation-controller.js";
 
-export default {
-  AnimationClock,
-  AnimationController,
-};
+export const AnimationClock = aClock;
+export const AnimationController = aController;
