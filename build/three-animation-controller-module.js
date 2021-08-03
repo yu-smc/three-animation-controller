@@ -1,4 +1,15 @@
-export class AnimationController {
+class AnimationClock {
+  constructor() {
+    this.clock = new THREE.Clock();
+    this.delta = null;
+  }
+
+  update() {
+    this.delta = this.clock.getDelta();
+  }
+}
+
+class AnimationController {
   constructor(model, clock, options) {
     this.object3D = model;
     this.animationMixer = this.initAnimationMixer();
@@ -92,3 +103,10 @@ export class AnimationController {
     this.animationMixer.update(this.animationClock.delta);
   }
 }
+
+var indexModule = {
+  AnimationClock,
+  AnimationController,
+};
+
+export default indexModule;

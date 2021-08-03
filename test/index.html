@@ -14,12 +14,12 @@
   <!-- Defines AnimationClock and AnimationController -->
   <script src="../build/three-animation-controller.js"></script>
 
-  <a-scene id="test-scene" three-clock>
+  <a-scene id="test-scene" three-clock background="color: gray">
     <a-assets>
-      <a-asset-item id="test-model" src="path/to/3d-model"></a-asset-item>
+      <a-asset-item id="test-model" src="3d-model/myutwo.glb"></a-asset-item>
     </a-assets>
 
-    <a-entity animation-controller gltf-model="#test-model" position="0 0 -5"></a-entity>
+    <a-entity animation-controller id="model" gltf-model="#test-model" position="0 0 -5"></a-entity>
   </a-scene>
 
   <script>
@@ -43,26 +43,20 @@
             //下記は最初のアニメーションを一回再生し、2番目のアニメーションを5回ループして終了するサンプル
             animations: [
               {
-                name: "eating",
+                name: "Action",
                 //アニメーション間に静止ができてしまったりする場合に設定。大きい値ほど早いタイミングで次のアニメーションに遷移。マイナス指定も可
                 cutoff: 100
               },
-              {
-                name: "yorokobi",
-                loop: true,
-                //数値を指定するとその回数分ループする
-                loopTimes: 1
-              }
             ]
           });
 
           that.animationController.start();
-          that.isPlaying = true;
+          // that.isPlaying = true;
 
-          //全てのアニメーションの終了を検知
-          that.animationController.on('finished-all', () => {
-            that.isPlaying = false;
-          })
+          // //全てのアニメーションの終了を検知
+          // that.animationController.on('finished-all', () => {
+          //   that.isPlaying = false;
+          // })
 
           //最後まで再生しきったら自動でリセットされるが、明示的にアニメーションを終了する場合は以下のように記述する
           //that.animationController.stopAndReset();
@@ -70,10 +64,12 @@
       },
 
       tick() {
-        const controller = this.animationController;
-        if (controller && this.isPlaying) {
-          this.animationController.update();
-        }
+        console.log("aaa")
+        // const controller = this.animationController;
+        // if (controller && this.isPlaying) {
+
+        //   this.animationController.update();
+        // }
       }
     })
   </script>

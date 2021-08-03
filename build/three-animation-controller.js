@@ -60,6 +60,7 @@ class AnimationController {
   }
 
   playAnimation(id) {
+    debugger;
     const clipData = this.clipsByOrder[id];
     const animation = this.animationMixer.clipAction(clipData.clip);
 
@@ -77,10 +78,8 @@ class AnimationController {
     this.playAnimation(0);
   }
 
-  stopAndReset() {
+  stop() {
     this.animationMixer.stopAllAction();
-    this.currentAnimationId = null;
-    this.currentAnimationStartTime = null;
   }
 
   update() {
@@ -98,7 +97,6 @@ class AnimationController {
       if (this.clipsByOrder[nextId]) {
         this.playAnimation(nextId);
       } else {
-        this.stopAndReset();
         this.doEventCallbacks("finished-all");
       }
     }
